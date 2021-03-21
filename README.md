@@ -1,1 +1,1 @@
-# hotp-generator
+# CS352-Project

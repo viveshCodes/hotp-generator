@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HOTP | Demo</title>
+  <link rel="stylesheet" href="./css/style.css">
+
+  <script src="https://use.fontawesome.com/b5291d34ce.js"></script>
+
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navcontainer">
+        <h1 class="logo">HOTP</h1>
+        <ul class="menu">
+            <li> <a href="home.html">Home</a></li>
+            <li> <a href="theory.html">Theory</a></li>
+            <li> <a href="hotp.html">HOTP Generator</a></li>
+        </ul>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="form-wrap">
+        <h1>HOTP Generator</h1>
+        <h5>Generate a new HOTP</h5>
+
+        <div class="form-group">
+          <label for="Scret Key">
+            <i class="fa fa-key" aria-hidden="true"></i> Secret Key 
+          </label>
+          <p id ="secretkey" class="output"></p>
+        </div>
+
+      <div class="form-group">
+        <label for="input-otp">
+          <i class="fa fa-clock-o" aria-hidden="true"></i> Counter 
+        </label>
+        <p id ="counter" class="output">0</p>
+      </div>
+
+      <div class="form-group">
+        <label for="input-otp">
+          <i class="fa fa-mobile" aria-hidden="true"></i> HOTP Code 
+        </label>
+        <p id ="code" class="output">******</p>
+     </div>
+
+
+         <button class="btn" onclick="requestHotp()">Get New HOTP</button>
+    </div>
+</div>
+  <!-- DOM -->
+  <p id="secret"></p>  
+  
+  <!-- Include the JS file containing HMAC Algorithm -->
+  <script src="./hotp.js"></script>
+
+  <!-- Scripts to get secret key -->
+  <script>
+      $ = function(sel) {
+        return document.querySelector(sel);
+      };
+      
+      var hotp = new jsOTP.hotp();
+      var doge = hotp.getOtp(secret, 0);
+      
+      var counter = 0;
+      var secretkey= "abcdefghijklmnop";
+      $('#secretkey').innerText =secretkey;
+      $('#counter').innerText = counter;
+      
+      var updateHotp = function(secret, counter, el) {
+        el.innerText = hotp.getOtp(secret, counter);
+      }
+      var updateCounter = function(counter, el) {
+        el.innerText = counter;
+      }
+      var requestHotp = function() {
+        updateHotp(secretkey, counter, $('#code'));
+        updateCounter(++counter, $('#counter'));
+      }
+  </script>
+
+</body>
+</html>
